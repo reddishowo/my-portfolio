@@ -4,55 +4,55 @@ import Image from "next/image";
 
 export default function Projects() {
   const projects = [
-    { 
-      title: "SPPDN Bea Cukai", 
-      description: "National digital attendance and employee management system developed for government customs and excise staff.", 
+    {
+      title: "SPPDN Bea Cukai",
+      description: "National digital attendance and employee management system developed for government customs and excise staff.",
       tech: ["Flutter", "Dart", "Mobile"],
       github: "https://github.com/reddishowo/sppdn-beacukai",
-      imagePath: "" 
+      imagePath: "/images/2.png"
     },
-    { 
-      title: "Evenity", 
-      description: "Comprehensive full-stack web application designed to streamline the organization, ticketing, and management of events.", 
+    {
+      title: "Evenity",
+      description: "Comprehensive full-stack web application designed to streamline the organization, ticketing, and management of events.",
       tech: ["TypeScript", "Next.js", "Tailwind"],
       github: "https://github.com/reddishowo/event-management-web",
-      imagePath: "" 
+      imagePath: "/images/3.png"
     },
-    { 
-      title: "Bio Collab", 
-      description: "Interactive e-module platform featuring real-time group collaboration, collaborative worksheets, and live evaluations.", 
+    {
+      title: "Bio Collab",
+      description: "Interactive e-module platform featuring real-time group collaboration, collaborative worksheets, and live evaluations.",
       tech: ["TypeScript", "Next.js", "MongoDB"],
       github: "https://github.com/reddishowo/bio-collab",
-      imagePath: "" 
+      imagePath: "/images/4.png"
     },
-    { 
-      title: "Micro Literacy", 
-      description: "Interactive learning media based on Group Investigation (GI) integrating collaborative research, live discussions, and real-time evaluation.", 
+    {
+      title: "Micro Literacy",
+      description: "Interactive learning media based on Group Investigation (GI) integrating collaborative research, live discussions, and real-time evaluation.",
       tech: ["TypeScript", "Next.js", "MongoDB"],
       github: "https://github.com/reddishowo/micro-literacy",
-      imagePath: "" 
+      imagePath: "/images/5.png"
     },
-    { 
-      title: "Transformer Topic Modeling", 
-      description: "A comparative analysis pipeline evaluating advanced transformer models for topic modeling in scientific literature.", 
-      tech: ["Python", "Jupyter", "Machine Learning"],
-      github: "https://github.com/reddishowo/Transformer-Based-Topic-Modeling-Pipeline-for-Scientific-Literature",
-      imagePath: "" 
-    },
-    { 
-      title: "Dressmaker App", 
-      description: "Innovative mobile application designed for tailoring and fashion enthusiasts to easily order custom dresses.", 
-      tech: ["Flutter", "Dart", "Firebase"],
-      github: "https://github.com/reddishowo/dressmaker-app",
-      imagePath: "" 
-    },
-    { 
-      title: "Reparin Mobile", 
-      description: "Comprehensive gadget repair booking app featuring real-time GPS tracking, in-app messaging, camera integration, and role-based dashboards.", 
+    {
+      title: "Reparin Mobile",
+      description: "Comprehensive gadget repair booking app featuring real-time GPS tracking, in-app messaging, camera integration, and role-based dashboards.",
       tech: ["Flutter", "GetX", "Maps API"],
       github: "https://github.com/hisyam99/reparin-mobile", // Menggunakan link repository hisyam99
       liveUrl: "https://reparin.xyz/en",
-      imagePath: "" 
+      imagePath: "/images/1.png"
+    },
+    {
+      title: "Dressmaker App",
+      description: "Innovative mobile application designed for tailoring and fashion enthusiasts to easily order custom dresses.",
+      tech: ["Flutter", "Dart", "Firebase"],
+      github: "https://github.com/reddishowo/dressmaker-app",
+      imagePath: ""
+    },
+    {
+      title: "Transformer Topic Modeling",
+      description: "A Comparative Analysis of Transformer-Based Topic Modeling Pipelines for Scientific Literature",
+      tech: ["Python", "NLP", "Machine Learning", "Research Paper"],
+      github: "https://github.com/reddishowo/Transformer-Based-Topic-Modeling-Pipeline-for-Scientific-Literature",
+      imagePath: "/images/7.png"
     },
   ];
 
@@ -65,9 +65,9 @@ export default function Projects() {
               <h2 className="text-sm font-semibold text-zinc-500 tracking-widest uppercase mb-3">Selected Projects</h2>
               <p className="text-2xl font-medium text-zinc-200">Featured work across disciplines.</p>
             </div>
-            <a 
-              href="https://github.com/reddishowo" 
-              target="_blank" 
+            <a
+              href="https://github.com/reddishowo"
+              target="_blank"
               rel="noreferrer"
               className="text-sm text-zinc-400 hover:text-zinc-200 flex items-center gap-1 transition-colors"
             >
@@ -81,11 +81,11 @@ export default function Projects() {
           {projects.map((project, i) => (
             <FadeIn key={i} delay={(i % 2) * 0.1}>
               <div className="group relative block p-6 bg-zinc-900/40 border border-zinc-800/50 rounded-2xl hover:bg-zinc-900/80 hover:border-zinc-700 transition-all duration-500 h-full flex-col">
-                
+
                 {/* Image Container */}
                 <div className="w-full h-56 bg-zinc-800/30 rounded-lg mb-6 overflow-hidden relative border border-zinc-800/50 flex items-center justify-center">
                   {project.imagePath ? (
-                    <Image 
+                    <Image
                       src={project.imagePath}
                       alt={project.title}
                       fill
@@ -115,7 +115,7 @@ export default function Projects() {
                     )}
                   </div>
                 </div>
-                
+
                 <p className="text-zinc-400 font-light mb-8 text-sm leading-relaxed grow">
                   {project.description}
                 </p>
