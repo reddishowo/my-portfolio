@@ -36,7 +36,7 @@ export default function Projects() {
       title: "Reparin Mobile",
       description: "Comprehensive gadget repair booking app featuring real-time GPS tracking, in-app messaging, camera integration, and role-based dashboards.",
       tech: ["Flutter", "GetX", "Maps API"],
-      github: "https://github.com/hisyam99/reparin-mobile", // Menggunakan link repository hisyam99
+      github: "https://github.com/hisyam99/reparin-mobile",
       liveUrl: "https://reparin.xyz/en",
       imagePath: "/images/1.png"
     },
@@ -57,7 +57,7 @@ export default function Projects() {
   ];
 
   return (
-    <section id="projects" className="py-24 px-6 border-t border-zinc-900">
+    <section id="projects" className="py-24 px-4 sm:px-6 border-t border-zinc-900">
       <div className="max-w-5xl mx-auto">
         <FadeIn>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
@@ -76,23 +76,23 @@ export default function Projects() {
           </div>
         </FadeIn>
 
-        {/* Gunakan Grid 2 Kolom yang responsif */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {projects.map((project, i) => (
             <FadeIn key={i} delay={(i % 2) * 0.1}>
-              <div className="group relative block p-6 bg-zinc-900/40 border border-zinc-800/50 rounded-2xl hover:bg-zinc-900/80 hover:border-zinc-700 transition-all duration-500 h-full flex-col">
+              <div className="group relative flex flex-col p-4 sm:p-6 bg-zinc-900/40 border border-zinc-800/50 rounded-2xl hover:bg-zinc-900/80 hover:border-zinc-700 transition-all duration-500 h-full">
 
-                {/* Image Container */}
-                <div className="w-full h-56 bg-zinc-800/30 rounded-lg mb-6 overflow-hidden relative border border-zinc-800/50 flex items-center justify-center">
+                {/* Image Container — aspect-ratio based so it scales naturally on all screens */}
+                <div className="w-full aspect-video bg-zinc-800/30 rounded-lg mb-5 overflow-hidden relative border border-zinc-800/50">
                   {project.imagePath ? (
                     <Image
                       src={project.imagePath}
                       alt={project.title}
                       fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 480px"
                       className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-in-out"
                     />
                   ) : (
-                    <div className="flex flex-col items-center justify-center text-zinc-600">
+                    <div className="flex flex-col items-center justify-center h-full text-zinc-600">
                       <span className="text-sm tracking-widest uppercase mb-2 opacity-50">Placeholder</span>
                       <span className="text-xs">{project.title} Image</span>
                     </div>
@@ -100,9 +100,9 @@ export default function Projects() {
                 </div>
 
                 {/* Content */}
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-medium text-zinc-200">{project.title}</h3>
-                  <div className="flex gap-3 text-zinc-500">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="text-lg sm:text-xl font-medium text-zinc-200 pr-2">{project.title}</h3>
+                  <div className="flex gap-3 text-zinc-500 shrink-0">
                     {project.github && (
                       <a href={project.github} target="_blank" rel="noreferrer" aria-label="GitHub Repository" className="hover:text-zinc-200 transition-colors">
                         <Github size={20} />
@@ -116,7 +116,7 @@ export default function Projects() {
                   </div>
                 </div>
 
-                <p className="text-zinc-400 font-light mb-8 text-sm leading-relaxed grow">
+                <p className="text-zinc-400 font-light mb-5 text-sm leading-relaxed grow">
                   {project.description}
                 </p>
 
