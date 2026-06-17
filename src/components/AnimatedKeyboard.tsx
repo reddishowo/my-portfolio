@@ -67,7 +67,7 @@ export default function AnimatedKeyboard() {
 
         <div className="space-y-2">
           {rows.map((row, rowIndex) => (
-            <div key={rowIndex} className="grid grid-cols-4 gap-2">
+            <div key={rowIndex} className="grid grid-cols-2 gap-2 sm:grid-cols-4">
               {row.map((key, keyIndex) => (
                 <motion.button
                   key={key.label}

@@ -66,7 +66,7 @@ export default function Hero() {
           </FadeIn>
 
           <FadeIn delay={0.3}>
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] text-zinc-100 sm:text-6xl lg:text-7xl">
+            <h1 className="max-w-4xl text-4xl font-semibold leading-[1.04] text-zinc-100 sm:text-6xl sm:leading-[1.02] lg:text-7xl">
               I build fast, polished software for web, mobile, and data-driven products.
             </h1>
           </FadeIn>
