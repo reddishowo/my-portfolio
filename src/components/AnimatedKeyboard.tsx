@@ -68,29 +68,47 @@ export default function AnimatedKeyboard() {
         <div className="space-y-2">
           {rows.map((row, rowIndex) => (
             <div key={rowIndex} className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-              {row.map((key, keyIndex) => (
-                <motion.button
-                  key={key.label}
-                  type="button"
-                  onClick={() => scrollToSection(key.target)}
-                  initial={shouldReduceMotion ? false : { opacity: 1, y: 8 }}
-                  animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45, delay: 0.5 + rowIndex * 0.08 + keyIndex * 0.04 }}
-                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
-                  whileTap={shouldReduceMotion ? undefined : { y: 2, scale: 0.98 }}
-                  className={`group relative min-h-18 overflow-hidden border border-zinc-800 bg-zinc-900 px-3 py-3 text-left text-zinc-300 shadow-lg shadow-black/30 transition-colors duration-300 ${key.wide ? "col-span-2" : ""} ${accentClasses[key.accent ?? "cyan"]}`}
-                  aria-label={`Jump to ${key.target ?? key.label}`}
-                >
-                  <span className="absolute inset-x-2 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-60" />
-                  <span className="flex items-center justify-between gap-2">
-                    <span className="text-sm font-semibold sm:text-base">{key.label}</span>
-                    <span className="text-zinc-500 transition-colors group-hover:text-current">
-                      {key.icon ?? <ArrowDown size={15} />}
+              {row.map((key, keyIndex) => {
+                return (
+                  <motion.button
+                    key={key.label}
+                    type="button"
+                    onClick={() => scrollToSection(key.target)}
+                    initial={shouldReduceMotion ? false : { opacity: 1, y: 8 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={{ duration: 0.45, delay: 0.5 + rowIndex * 0.08 + keyIndex * 0.04 }}
+                    whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+                    whileTap={shouldReduceMotion ? undefined : { y: 2, scale: 0.98 }}
+                    className={`group relative min-h-18 overflow-hidden border border-zinc-800 bg-zinc-900 px-3 py-3 text-left text-zinc-300 shadow-lg shadow-black/30 transition-colors duration-300 ${key.wide ? "col-span-2" : ""} ${accentClasses[key.accent ?? "cyan"]}`}
+                    aria-label={`Jump to ${key.target ?? key.label}`}
+                  >
+                    <span className="absolute inset-x-2 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-60" />
+                    <span className="flex items-center justify-between gap-2">
+                      <motion.span
+                        initial={false}
+                        animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                        transition={{ duration: 0.22 }}
+                        className="text-sm font-semibold sm:text-base"
+                      >
+                        {key.label}
+                      </motion.span>
+                      <span className="text-zinc-500 transition-colors group-hover:text-current">
+                        {key.icon ?? <ArrowDown size={15} />}
+                      </span>
                     </span>
-                  </span>
-                  {key.sublabel && <span className="mt-2 block font-mono text-[11px] text-zinc-500">{key.sublabel}</span>}
-                </motion.button>
-              ))}
+                    {key.sublabel && (
+                      <motion.span
+                        initial={false}
+                        animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                        transition={{ duration: 0.22, delay: 0.03 }}
+                        className="mt-2 block font-mono text-[11px] text-zinc-500"
+                      >
+                        {key.sublabel}
+                      </motion.span>
+                    )}
+                  </motion.button>
+                );
+              })}
             </div>
           ))}
         </div>

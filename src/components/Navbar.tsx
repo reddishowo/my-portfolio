@@ -7,6 +7,7 @@ import { Command } from "lucide-react";
 const navItems = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
+  { name: "Experience", href: "#experience" },
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ];
@@ -56,7 +57,8 @@ export default function Navbar() {
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               />
             )}
-            {item.name.toLowerCase()}
+            <span className="sm:hidden">{item.name === "Experience" ? "xp" : item.name.toLowerCase()}</span>
+            <span className="hidden sm:inline">{item.name.toLowerCase()}</span>
           </a>
         ))}
       </motion.nav>
