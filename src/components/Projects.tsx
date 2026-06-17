@@ -28,6 +28,7 @@ export default function Projects() {
       description: "A modern CRM application for managing customers, leads, and business workflows with a clean full-stack dashboard experience.",
       tech: ["Next.js", "TypeScript", "CRM", "Dashboard"],
       github: "https://github.com/Haeryz/nextcrm-app",
+      imagePath: "/images/8.png",
       command: "open --repo Haeryz/nextcrm-app",
       accent: "cyan",
     },
@@ -135,6 +136,7 @@ export default function Projects() {
                       src={project.imagePath}
                       alt={project.title}
                       fill
+                      loading={i === 0 ? "eager" : "lazy"}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 480px"
                       className="object-cover opacity-75 transition-all duration-700 ease-in-out group-hover:scale-105 group-hover:opacity-100"
                     />
@@ -163,25 +165,25 @@ export default function Projects() {
                       <a href={project.github} target="_blank" rel="noreferrer" aria-label={`${project.title} GitHub repository`} className="rounded-md border border-zinc-800 p-2 transition-colors hover:border-zinc-600 hover:text-zinc-100">
                         <Github size={17} />
                       </a>
-                    {project.liveUrl && (
+                      {project.liveUrl && (
                         <a href={project.liveUrl} target="_blank" rel="noreferrer" aria-label={`${project.title} live demo`} className="rounded-md border border-zinc-800 p-2 transition-colors hover:border-zinc-600 hover:text-zinc-100">
                           <ExternalLink size={17} />
-                      </a>
-                    )}
+                        </a>
+                      )}
                     </div>
                   </div>
 
                   <p className="mb-5 grow text-sm leading-7 text-zinc-400">
-                  {project.description}
-                </p>
+                    {project.description}
+                  </p>
 
                   <div className="mt-auto flex flex-wrap gap-2">
-                  {project.tech.map(t => (
+                    {project.tech.map(t => (
                       <span key={t} className="rounded-md border border-zinc-800 bg-zinc-900 px-2.5 py-1 font-mono text-[11px] text-zinc-400">
-                      {t}
-                    </span>
-                  ))}
-                </div>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </article>
             </FadeIn>

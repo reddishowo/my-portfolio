@@ -82,7 +82,7 @@ export default function AnimatedKeyboard() {
                     className={`group relative min-h-18 overflow-hidden border border-zinc-800 bg-zinc-900 px-3 py-3 text-left text-zinc-300 shadow-lg shadow-black/30 transition-colors duration-300 ${key.wide ? "col-span-2" : ""} ${accentClasses[key.accent ?? "cyan"]}`}
                     aria-label={`Jump to ${key.target ?? key.label}`}
                   >
-                    <span className="absolute inset-x-2 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-60" />
+                    <span className="absolute inset-x-2 top-0 h-px bg-linear-to-r from-transparent via-white/30 to-transparent opacity-60" />
                     <span className="flex items-center justify-between gap-2">
                       <motion.span
                         initial={false}

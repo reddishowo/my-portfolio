@@ -135,7 +135,7 @@ export default function Experience() {
 
                     return (
                       <article key={item.title} className="group relative h-full rounded-lg border border-zinc-800 bg-zinc-950/70 p-5 transition-colors hover:border-cyan-300/50">
-                        <span className={`absolute -left-[1.35rem] top-6 h-2.5 w-2.5 rounded-full ring-4 ring-[#0b0d10] ${group.accent}`} />
+                        <span className={`absolute left-[-1.35rem] top-6 h-2.5 w-2.5 rounded-full ring-4 ring-[#0b0d10] ${group.accent}`} />
                         <div className="mb-5 flex items-start justify-between gap-4">
                           <div className="flex items-center gap-3">
                             <span className="flex h-11 w-11 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900 text-cyan-200">
