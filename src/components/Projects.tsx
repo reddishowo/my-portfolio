@@ -24,7 +24,7 @@ const accentClasses: Record<Project["accent"], string> = {
 export default function Projects() {
   const projects: Project[] = [
     {
-      title: "NextCRM App",
+      title: "MekTek CRM App",
       description: "A modern CRM application for managing customers, leads, and business workflows with a clean full-stack dashboard experience.",
       tech: ["Next.js", "TypeScript", "CRM", "Dashboard"],
       github: "https://github.com/Haeryz/nextcrm-app",
