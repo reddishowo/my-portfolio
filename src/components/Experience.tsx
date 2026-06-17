@@ -74,6 +74,14 @@ const groups: ExperienceGroup[] = [
         tags: ["Freelance", "CRM", "Full-Stack"],
       },
       {
+        period: "June 2025 - August 2025",
+        title: "Mobile App Developer Intern",
+        place: "BLBC Balai Laboratorium Bea dan Cukai",
+        description: "Created the SPPDN Mobile App during internship, supporting digital attendance and employee management workflows.",
+        icon: Smartphone,
+        tags: ["Internship", "SPPDN", "Mobile App"],
+      },
+      {
         period: "Mobile",
         title: "Flutter App Developer",
         place: "Cross-platform applications",

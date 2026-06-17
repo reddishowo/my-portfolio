@@ -17,16 +17,24 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const sections = navItems.map(item => item.name.toLowerCase());
-      
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el && scrollY >= el.offsetTop - 200 && scrollY < el.offsetTop + el.offsetHeight - 200) {
-          setActiveSection(section);
-        }
-      }
+      const sections = navItems
+        .map((item) => item.name.toLowerCase())
+        .map((section) => {
+          const el = document.getElementById(section);
+          if (!el) return null;
+
+          return {
+            section,
+            distance: Math.abs(el.getBoundingClientRect().top - 120),
+          };
+        })
+        .filter((item): item is { section: string; distance: number } => Boolean(item));
+
+      const active = sections.sort((a, b) => a.distance - b.distance)[0]?.section;
+      if (active) setActiveSection(active);
     };
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);

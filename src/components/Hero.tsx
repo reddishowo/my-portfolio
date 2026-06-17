@@ -35,8 +35,8 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="relative z-10 flex min-h-dvh items-center overflow-hidden px-4 pt-24 sm:px-6 lg:px-8">
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 pb-16 pt-8 lg:grid-cols-[1fr_0.92fr]">
+    <section id="home" className="relative z-10 flex min-h-dvh items-center overflow-hidden px-4 pt-16 sm:px-6 lg:px-8">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 pb-16 pt-4 lg:grid-cols-[1fr_0.92fr]">
         <div className="relative z-10">
           <FadeIn delay={0.1}>
             <div className="mb-6 flex items-center gap-4">
