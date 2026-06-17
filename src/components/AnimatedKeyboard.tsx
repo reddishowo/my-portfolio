@@ -50,7 +50,7 @@ export default function AnimatedKeyboard() {
 
   return (
     <motion.div
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 28, rotateX: 8 }}
+      initial={shouldReduceMotion ? false : { opacity: 1, y: 16, rotateX: 5 }}
       animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0, rotateX: 0 }}
       transition={{ duration: 0.8, delay: 0.35, ease: [0.21, 0.47, 0.32, 0.98] }}
       className="relative w-full max-w-3xl"
@@ -73,7 +73,7 @@ export default function AnimatedKeyboard() {
                   key={key.label}
                   type="button"
                   onClick={() => scrollToSection(key.target)}
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+                  initial={shouldReduceMotion ? false : { opacity: 1, y: 8 }}
                   animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                   transition={{ duration: 0.45, delay: 0.5 + rowIndex * 0.08 + keyIndex * 0.04 }}
                   whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}

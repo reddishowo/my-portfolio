@@ -39,7 +39,7 @@ export default function About() {
         
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <FadeIn delay={0.1}>
-            <div className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-5">
+            <div className="w-full rounded-lg border border-zinc-800 bg-zinc-950/70 p-4 sm:p-5">
               <div className="mb-5 flex items-center justify-between border-b border-zinc-800 pb-4">
                 <span className="font-mono text-xs text-zinc-500">profile.readme</span>
                 <span className="h-2 w-2 rounded-full bg-lime-300" />
@@ -53,7 +53,7 @@ export default function About() {
 
               <div className="mt-8 grid gap-3">
                 {signals.map((signal) => (
-                  <div key={signal.label} className="grid grid-cols-[8rem_1fr] gap-3 border-t border-zinc-900 pt-3 text-sm">
+                  <div key={signal.label} className="grid gap-1 border-t border-zinc-900 pt-3 text-sm sm:grid-cols-[8rem_1fr] sm:gap-3">
                     <span className="font-mono text-zinc-600">{signal.label}</span>
                     <span className="text-zinc-300">{signal.value}</span>
                   </div>

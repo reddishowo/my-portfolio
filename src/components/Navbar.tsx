@@ -30,10 +30,9 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return (
-    <header className="fixed left-0 right-0 top-4 z-50 flex justify-center px-4">
-      <motion.nav 
-        initial={{ y: -50, opacity: 0 }}
+  const renderNav = (layoutId: string, initialY: number) => (
+    <motion.nav 
+        initial={{ y: initialY, opacity: 1 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
         className="flex max-w-full items-center gap-1 rounded-lg border border-zinc-800 bg-zinc-950/85 px-2 py-2 shadow-2xl shadow-black/40 backdrop-blur-md sm:gap-2"
@@ -52,7 +51,7 @@ export default function Navbar() {
           >
             {activeSection === item.name.toLowerCase() && (
               <motion.div
-                layoutId="active-pill"
+                layoutId={layoutId}
                 className="absolute inset-0 -z-10 rounded-md bg-cyan-200"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               />
@@ -61,6 +60,16 @@ export default function Navbar() {
           </a>
         ))}
       </motion.nav>
-    </header>
+  );
+
+  return (
+    <>
+      <header className="fixed left-0 right-0 top-4 z-50 hidden justify-center px-4 sm:flex">
+        {renderNav("active-pill-desktop", -12)}
+      </header>
+      <header className="fixed bottom-8 left-0 right-0 z-50 flex justify-center px-4 sm:hidden">
+        {renderNav("active-pill-mobile", 12)}
+      </header>
+    </>
   );
 }

@@ -6,6 +6,7 @@ import { ArrowDown, Github, Instagram, Linkedin, Terminal } from "lucide-react";
 import Image from "next/image";
 import { FadeIn } from "./FadeIn";
 import AnimatedKeyboard from "./AnimatedKeyboard";
+import CommandStatusDock from "./CommandStatusDock";
 
 const heroCommand = "build:typed_interfaces --with-motion";
 
@@ -91,6 +92,8 @@ export default function Hero() {
               </div>
             </div>
           </FadeIn>
+
+          <CommandStatusDock />
         </div>
 
         <div className="relative z-10">
