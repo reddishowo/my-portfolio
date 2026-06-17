@@ -1,15 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0f0f11; /* Hitam pastel / Very dark zinc */
-  --foreground: #f4f4f5; /* Putih lembut / Zinc 100 */
-  --muted: #a1a1aa;      /* Abu-abu redup / Zinc 400 */
-  --border: #27272a;     /* Garis tepi halus / Zinc 800 */
+  --background: #0b0d10;
+  --foreground: #f4f4f5;
+  --muted: #a1a1aa;
+  --border: #27272a;
 }
 
-/* 
-  Integrasi variabel kustom ke dalam engine Tailwind v4 
-*/
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -18,9 +15,6 @@
   --font-sans: var(--font-inter), sans-serif;
 }
 
-/* 
-  Base styling 
-*/
 html {
   scroll-behavior: smooth;
 }
@@ -36,9 +30,24 @@ body {
   overflow-x: hidden;
 }
 
-/* 
-  Custom Scrollbar Minimalis 
-*/
+::selection {
+  background: rgba(103, 232, 249, 0.28);
+  color: #f8fafc;
+}
+
+.command-grid {
+  background-image:
+    linear-gradient(rgba(63, 63, 70, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(63, 63, 70, 0.18) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+}
+
+.keyboard-shell {
+  border-radius: 8px;
+  transform-style: preserve-3d;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -46,17 +55,27 @@ body {
   background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #3f3f46; /* Zinc 700 */
+  background: #3f3f46;
   border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #52525b; /* Zinc 600 */
+  background: #52525b;
 }
 
-/* 
-  Aksesibilitas: Hilangkan outline biru default saat diklik dengan mouse,
-  tapi tetap ada saat navigasi menggunakan keyboard (Tab)
-*/
 :focus:not(:focus-visible) {
   outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

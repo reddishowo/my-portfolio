@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Command } from "lucide-react";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -30,29 +31,33 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+    <header className="fixed left-0 right-0 top-4 z-50 flex justify-center px-4">
       <motion.nav 
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-full px-4 py-2 flex items-center gap-2 sm:gap-6 shadow-2xl"
+        className="flex max-w-full items-center gap-1 rounded-lg border border-zinc-800 bg-zinc-950/85 px-2 py-2 shadow-2xl shadow-black/40 backdrop-blur-md sm:gap-2"
       >
+        <span className="mr-1 hidden items-center gap-2 border-r border-zinc-800 px-3 py-1.5 font-mono text-xs text-zinc-500 sm:inline-flex">
+          <Command size={14} />
+          nav
+        </span>
         {navItems.map((item) => (
           <a
             key={item.name}
             href={item.href}
-            className={`relative px-3 py-1.5 text-sm font-medium transition-colors ${
-              activeSection === item.name.toLowerCase() ? "text-white" : "text-zinc-400 hover:text-zinc-200"
+            className={`relative rounded-md px-3 py-1.5 font-mono text-xs transition-colors sm:text-sm ${
+              activeSection === item.name.toLowerCase() ? "text-zinc-950" : "text-zinc-400 hover:text-zinc-100"
             }`}
           >
             {activeSection === item.name.toLowerCase() && (
               <motion.div
                 layoutId="active-pill"
-                className="absolute inset-0 bg-zinc-800 rounded-full -z-10"
+                className="absolute inset-0 -z-10 rounded-md bg-cyan-200"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               />
             )}
-            {item.name}
+            {item.name.toLowerCase()}
           </a>
         ))}
       </motion.nav>

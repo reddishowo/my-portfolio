@@ -1,28 +1,30 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Github, Linkedin, Instagram } from "lucide-react";
+import type { ReactNode } from "react";
+import { ArrowDown, Github, Instagram, Linkedin, Terminal } from "lucide-react";
 import Image from "next/image";
 import { FadeIn } from "./FadeIn";
+import AnimatedKeyboard from "./AnimatedKeyboard";
+
+const heroCommand = "build:typed_interfaces --with-motion";
 
 export default function Hero() {
-  const fullText = "Hi, I'm Farriel Arrianta";
   const [displayText, setDisplayText] = useState("");
 
   useEffect(() => {
     let currentIndex = 0;
-    let intervalId: NodeJS.Timeout;
+    let intervalId: ReturnType<typeof setInterval> | undefined;
 
-    // Memberikan sedikit delay (300ms) agar selaras dengan animasi FadeIn dari bawah
     const timeoutId = setTimeout(() => {
       intervalId = setInterval(() => {
-        if (currentIndex <= fullText.length) {
-          setDisplayText(fullText.slice(0, currentIndex));
+        if (currentIndex <= heroCommand.length) {
+          setDisplayText(heroCommand.slice(0, currentIndex));
           currentIndex++;
         } else {
           clearInterval(intervalId);
         }
-      }, 80); // 80ms adalah kecepatan ketik per karakter. Ubah jika ingin lebih cepat/lambat.
+      }, 42);
     }, 300);
 
     return () => {
@@ -32,61 +34,80 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="min-h-dvh flex items-center justify-center pt-20 px-6 relative overflow-hidden">
-      <div className="max-w-3xl flex flex-col items-center text-center z-10">
-        
-        {/* FOTO PROFIL (Berwarna + Efek Zoom-in sedikit saat dihover) */}
-        <FadeIn delay={0.1}>
-          <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden mb-8 border border-zinc-800 p-1">
-            <div className="w-full h-full rounded-full bg-zinc-800 overflow-hidden relative">
-              <Image 
-                src="/images/me.jpg" 
-                alt="Farriel Arrianta" 
-                fill 
-                className="object-cover transition-transform duration-500 hover:scale-105" 
-                priority
-              />
+    <section id="home" className="relative z-10 flex min-h-dvh items-center overflow-hidden px-4 pt-24 sm:px-6 lg:px-8">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 pb-16 pt-8 lg:grid-cols-[1fr_0.92fr]">
+        <div className="relative z-10">
+          <FadeIn delay={0.1}>
+            <div className="mb-6 flex items-center gap-4">
+              <div className="relative h-16 w-16 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 p-1 sm:h-20 sm:w-20">
+                <Image
+                  src="/images/me.jpg"
+                  alt="Farriel Arrianta"
+                  fill
+                  sizes="80px"
+                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  priority
+                />
+              </div>
+              <div className="min-w-0">
+                <p className="font-mono text-xs text-cyan-200">Farriel Arrianta</p>
+                <p className="mt-1 text-sm text-zinc-500">Software engineer / interface builder</p>
+              </div>
             </div>
-          </div>
-        </FadeIn>
-        
-        {/* TEKS DENGAN ANIMASI MENGETIK */}
-        <FadeIn delay={0.2}>
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-zinc-100 mb-4 min-h-10 md:min-h-15">
-            {displayText}
-            <span className="animate-pulse text-zinc-500 font-light">|</span>
-          </h1>
-        </FadeIn>
-        
-        {/* DESKRIPSI SINGKAT */}
-        <FadeIn delay={0.4}>
-          <p className="text-lg md:text-xl text-zinc-400 mb-8 max-w-2xl font-light leading-relaxed">
-            Multidisciplinary Software Engineer. I build elegant web platforms, robust cross-platform mobile applications, and intelligent data science pipelines. Focused on clean architecture and impactful digital experiences.
-          </p>
-        </FadeIn>
+          </FadeIn>
 
-        {/* SOSIAL MEDIA */}
-        <FadeIn delay={0.5} direction="up">
-          <div className="flex items-center gap-6">
-            <SocialLink href="https://github.com/reddishowo" icon={<Github size={22} />} />
-            <SocialLink href="https://www.linkedin.com/in/farriel-arrianta/" icon={<Linkedin size={22} />} />
-            <SocialLink href="https://instagram.com/_farriel_" icon={<Instagram size={22} />} />
-          </div>
-        </FadeIn>
+          <FadeIn delay={0.2}>
+            <div className="mb-5 inline-flex max-w-full items-center gap-2 rounded-md border border-zinc-800 bg-zinc-950/70 px-3 py-2 font-mono text-xs text-zinc-400">
+              <Terminal size={14} className="shrink-0 text-lime-300" />
+              <span className="truncate">$ {displayText}</span>
+              <span className="animate-pulse text-cyan-200">|</span>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.3}>
+            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] text-zinc-100 sm:text-6xl lg:text-7xl">
+              I build fast, polished software for web, mobile, and data-driven products.
+            </h1>
+          </FadeIn>
+
+          <FadeIn delay={0.45}>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-400 sm:text-lg">
+              I build clean Next.js interfaces, Flutter apps, and data-driven products with enough motion to make the work feel responsive without getting in the way.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={0.55} direction="up">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                href="#projects"
+                className="inline-flex items-center gap-2 rounded-md bg-zinc-100 px-4 py-3 text-sm font-semibold text-zinc-950 transition-colors hover:bg-white"
+              >
+                View projects <ArrowDown size={16} />
+              </a>
+              <div className="flex items-center gap-2">
+                <SocialLink href="https://github.com/reddishowo" label="GitHub" icon={<Github size={18} />} />
+                <SocialLink href="https://www.linkedin.com/in/farriel-arrianta/" label="LinkedIn" icon={<Linkedin size={18} />} />
+                <SocialLink href="https://instagram.com/_farriel_" label="Instagram" icon={<Instagram size={18} />} />
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+
+        <div className="relative z-10">
+          <AnimatedKeyboard />
+        </div>
       </div>
-
-      {/* Efek Cahaya / Glow minimalis di background (Opsional, menambah kesan elegan) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-150 h-75 md:h-100 bg-zinc-800/20 blur-[100px] md:blur-[120px] rounded-full -z-10 pointer-events-none"></div>
     </section>
   );
 }
 
-const SocialLink = ({ href, icon }: { href: string; icon: React.ReactNode }) => (
+const SocialLink = ({ href, icon, label }: { href: string; icon: ReactNode; label: string }) => (
   <a 
     href={href} 
     target="_blank" 
     rel="noreferrer" 
-    className="text-zinc-500 hover:text-zinc-200 transition-transform duration-300 hover:scale-110"
+    aria-label={label}
+    className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-zinc-800 bg-zinc-950/70 text-zinc-500 transition-colors duration-300 hover:border-zinc-600 hover:text-zinc-100"
   >
     {icon}
   </a>
