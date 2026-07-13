@@ -27,7 +27,7 @@ export function ScrollReveal({
           : { opacity: 0, y: distance, filter: "blur(8px)" }
       }
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, margin: "-10% 0px" }}
+      viewport={{ once: true, margin: "-4% 0px" }}
       transition={{
         duration: 0.75,
         delay,
