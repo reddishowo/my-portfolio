@@ -61,14 +61,14 @@ export function Hero() {
                 Start a conversation
                 <ArrowUpRight size={16} />
               </a>
-              <div className="hero-socials" aria-label="Social links">
+              <nav className="hero-socials" aria-label="Social links">
                 <a href="https://github.com/reddishowo" target="_blank" rel="noreferrer" aria-label="GitHub profile">
                   <Github size={17} />
                 </a>
                 <a href="https://www.linkedin.com/in/farriel-arrianta/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
                   <Linkedin size={17} />
                 </a>
-              </div>
+              </nav>
             </div>
           </ScrollReveal>
 
