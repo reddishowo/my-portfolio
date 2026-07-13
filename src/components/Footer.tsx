@@ -1,7 +1,18 @@
-export default function Footer() {
+import { ArrowUp } from "lucide-react";
+
+export function Footer() {
   return (
-    <footer className="relative z-10 border-t border-zinc-900 px-4 py-8 text-center font-mono text-xs text-zinc-600">
-      <p>Farriel Arrianta / {new Date().getFullYear()} / end-of-buffer</p>
+    <footer className="site-footer">
+      <div className="lab-container site-footer__inner">
+        <div>
+          <strong>Farriel Arrianta</strong>
+          <span>Software engineer / Malang, Indonesia</span>
+        </div>
+        <p>Designed as a digital workbench · {new Date().getFullYear()}</p>
+        <a href="#home">
+          Back to top <ArrowUp size={14} />
+        </a>
+      </div>
     </footer>
   );
-}  
+}

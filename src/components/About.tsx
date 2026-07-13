@@ -1,88 +1,103 @@
-import { FadeIn } from "./FadeIn";
+import { ArrowUpRight, Database, PanelsTopLeft, Smartphone } from "lucide-react";
+import { ScrollReveal } from "./ScrollReveal";
 
-export default function About() {
-  const skillGroups = [
-    {
-      title: "Frontend",
-      skills: ["Next.js", "React", "TypeScript", "Tailwind"],
-    },
-    {
-      title: "Mobile",
-      skills: ["Flutter", "Dart", "GetX", "Maps API"],
-    },
-    {
-      title: "Data",
-      skills: ["Python", "NLP", "Machine Learning", "MongoDB"],
-    },
-  ];
+const capabilities = [
+  {
+    number: "01",
+    title: "Web systems",
+    description:
+      "Fast, typed interfaces for operations, collaboration, and customer-facing products—built to remain understandable as they grow.",
+    stack: ["Next.js", "React", "TypeScript", "Tailwind"],
+    icon: PanelsTopLeft,
+    tone: "blue",
+  },
+  {
+    number: "02",
+    title: "Mobile products",
+    description:
+      "Cross-platform applications with real workflows: attendance, booking, location, messaging, camera, and role-based experiences.",
+    stack: ["Flutter", "Dart", "GetX", "Maps API"],
+    icon: Smartphone,
+    tone: "accent",
+  },
+  {
+    number: "03",
+    title: "Data workflows",
+    description:
+      "Practical pipelines and exploratory systems that turn scientific literature and operational data into useful, legible outputs.",
+    stack: ["Python", "NLP", "Machine Learning", "MongoDB"],
+    icon: Database,
+    tone: "ink",
+  },
+] as const;
 
-  const signals = [
-    { label: "Primary mode", value: "Full-stack interfaces" },
-    { label: "Current focus", value: "Systems that feel fast" },
-    { label: "Base", value: "Indonesia" },
-  ];
+const principles = [
+  ["01", "Clarity before decoration"],
+  ["02", "Motion with a job to do"],
+  ["03", "Architecture people can follow"],
+] as const;
 
+export function About() {
   return (
-    <section id="about" className="relative z-10 border-t border-zinc-900 px-4 py-24 sm:px-6">
-      <div className="mx-auto max-w-6xl">
-        <FadeIn>
-          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="font-mono text-sm text-cyan-200">/about</p>
-              <h2 className="mt-3 text-3xl font-semibold text-zinc-100 sm:text-4xl">A practical builder with a motion-first interface instinct.</h2>
-            </div>
-            <p className="max-w-md text-sm leading-7 text-zinc-500">
-              Minimalism still matters here, but the new site lets the work feel tactile: keys, commands, panels, and precise movement.
+    <section id="about" className="section-shell capabilities-section">
+      <div className="lab-container">
+        <div className="capabilities-intro">
+          <ScrollReveal>
+            <span className="section-kicker">Profile / capabilities</span>
+            <h2>
+              One builder,
+              <br />
+              three connected <span className="display-serif">disciplines.</span>
+            </h2>
+          </ScrollReveal>
+
+          <ScrollReveal className="capabilities-intro__copy" delay={0.1}>
+            <p>
+              I’m a software engineer based in Malang, Indonesia, studying Informatics at
+              Universitas Muhammadiyah Malang. My work sits where product thinking,
+              interface craft, and practical engineering meet.
             </p>
-          </div>
-        </FadeIn>
-        
-        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <FadeIn delay={0.1}>
-            <div className="w-full rounded-lg border border-zinc-800 bg-zinc-950/70 p-4 sm:p-5">
-              <div className="mb-5 flex items-center justify-between border-b border-zinc-800 pb-4">
-                <span className="font-mono text-xs text-zinc-500">profile.readme</span>
-                <span className="h-2 w-2 rounded-full bg-lime-300" />
-              </div>
-              <p className="text-lg leading-8 text-zinc-300">
-                I am a software engineer based in Indonesia, currently studying at the University of Muhammadiyah Malang. I care about building scalable web applications, useful mobile products, and clean data workflows.
-              </p>
-              <p className="mt-5 text-base leading-8 text-zinc-500">
-                My approach is to remove noise, keep architecture understandable, and make interfaces feel responsive through clear interaction design.
-              </p>
-
-              <div className="mt-8 grid gap-3">
-                {signals.map((signal) => (
-                  <div key={signal.label} className="grid gap-1 border-t border-zinc-900 pt-3 text-sm sm:grid-cols-[8rem_1fr] sm:gap-3">
-                    <span className="font-mono text-zinc-600">{signal.label}</span>
-                    <span className="text-zinc-300">{signal.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.2} direction="left">
-            <div className="grid gap-4 sm:grid-cols-3">
-              {skillGroups.map((group) => (
-                <div key={group.title} className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-4">
-                  <h3 className="mb-4 font-mono text-xs text-zinc-500">{group.title}</h3>
-                  <div className="grid gap-2">
-                    {group.skills.map((skill) => (
-                      <div
-                        key={skill}
-                        className="min-h-13 rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 shadow-lg shadow-black/20 transition-colors hover:border-cyan-300/60 hover:text-cyan-100"
-                      >
-                        <span className="block text-sm font-semibold text-zinc-200">{skill}</span>
-                        <span className="mt-1 block font-mono text-[11px] text-zinc-600">stack</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
+            <a href="#experience">
+              Read the build log <ArrowUpRight size={15} />
+            </a>
+          </ScrollReveal>
         </div>
+
+        <div className="capability-grid">
+          {capabilities.map((capability, index) => {
+            const Icon = capability.icon;
+
+            return (
+              <ScrollReveal key={capability.title} delay={index * 0.09}>
+                <article className={`capability-card capability-card--${capability.tone}`}>
+                  <div className="capability-card__topline">
+                    <span>{capability.number} / discipline</span>
+                    <Icon size={21} strokeWidth={1.6} aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h3>{capability.title}</h3>
+                    <p>{capability.description}</p>
+                  </div>
+                  <ul aria-label={`${capability.title} technologies`}>
+                    {capability.stack.map((technology) => (
+                      <li key={technology}>{technology}</li>
+                    ))}
+                  </ul>
+                </article>
+              </ScrollReveal>
+            );
+          })}
+        </div>
+
+        <ScrollReveal className="principles-strip">
+          <span className="principles-strip__label">Operating principles</span>
+          {principles.map(([number, principle]) => (
+            <div key={number}>
+              <span>{number}</span>
+              <strong>{principle}</strong>
+            </div>
+          ))}
+        </ScrollReveal>
       </div>
     </section>
   );

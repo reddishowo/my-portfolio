@@ -1,117 +1,101 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import type { ReactNode } from "react";
-import { ArrowDown, Github, Instagram, Linkedin, Terminal } from "lucide-react";
 import Image from "next/image";
-import { FadeIn } from "./FadeIn";
-import AnimatedKeyboard from "./AnimatedKeyboard";
-import CommandStatusDock from "./CommandStatusDock";
+import { ArrowDownRight, ArrowUpRight, Github, Linkedin } from "lucide-react";
+import { LabScene } from "./LabScene";
+import { ScrollReveal } from "./ScrollReveal";
 
-const heroCommand = "build:typed_interfaces --with-motion";
+const signals = [
+  { value: "03", label: "disciplines" },
+  { value: "08", label: "shipped builds" },
+  { value: "IDN", label: "Malang based" },
+] as const;
 
-export default function Hero() {
-  const [displayText, setDisplayText] = useState("");
-
-  useEffect(() => {
-    let currentIndex = 0;
-    let intervalId: ReturnType<typeof setInterval> | undefined;
-
-    const timeoutId = setTimeout(() => {
-      intervalId = setInterval(() => {
-        if (currentIndex <= heroCommand.length) {
-          setDisplayText(heroCommand.slice(0, currentIndex));
-          currentIndex++;
-        } else {
-          clearInterval(intervalId);
-        }
-      }, 42);
-    }, 300);
-
-    return () => {
-      clearTimeout(timeoutId);
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, []);
-
+export function Hero() {
   return (
-    <section id="home" className="relative z-10 flex min-h-dvh items-center overflow-hidden px-4 pt-16 sm:px-6 lg:px-8">
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 pb-16 pt-4 lg:grid-cols-[1fr_0.92fr]">
-        <div className="relative z-10">
-          <FadeIn delay={0.1}>
-            <div className="mb-6 flex items-center gap-4">
-              <div className="relative h-16 w-16 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 p-1 sm:h-20 sm:w-20">
+    <section id="home" className="hero-section">
+      <div className="lab-container hero-grid">
+        <div className="hero-copy">
+          <ScrollReveal>
+            <div className="hero-intro">
+              <div className="hero-portrait">
                 <Image
                   src="/images/me.jpg"
                   alt="Farriel Arrianta"
                   fill
-                  sizes="80px"
-                  className="object-cover transition-transform duration-500 hover:scale-105"
                   priority
+                  sizes="52px"
+                  className="object-cover"
                 />
               </div>
-              <div className="min-w-0">
-                <p className="font-mono text-xs text-cyan-200">Farriel Arrianta</p>
-                <p className="mt-1 text-sm text-zinc-500">Software engineer / interface builder</p>
+              <div>
+                <span className="section-kicker">Independent software engineer</span>
+                <p>Web systems · Mobile products · Data workflows</p>
               </div>
             </div>
-          </FadeIn>
+          </ScrollReveal>
 
-          <FadeIn delay={0.2}>
-            <div className="mb-5 inline-flex max-w-full items-center gap-2 rounded-md border border-zinc-800 bg-zinc-950/70 px-3 py-2 font-mono text-xs text-zinc-400">
-              <Terminal size={14} className="shrink-0 text-lime-300" />
-              <span className="truncate">$ {displayText}</span>
-              <span className="animate-pulse text-cyan-200">|</span>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.3}>
-            <h1 className="max-w-4xl text-4xl font-semibold leading-[1.04] text-zinc-100 sm:text-6xl sm:leading-[1.02] lg:text-7xl">
-              I build fast, polished software for web, mobile, and data-driven products.
+          <ScrollReveal delay={0.08} distance={38}>
+            <h1 className="hero-title">
+              I engineer <span className="display-serif">digital products</span> that make complex work feel simple.
             </h1>
-          </FadeIn>
+          </ScrollReveal>
 
-          <FadeIn delay={0.45}>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-400 sm:text-lg">
-              I build clean Next.js interfaces, Flutter apps, and data-driven products with enough motion to make the work feel responsive without getting in the way.
+          <ScrollReveal delay={0.16}>
+            <p className="hero-summary">
+              I turn operational ideas into precise Next.js interfaces, capable Flutter apps,
+              and data-driven tools—designed to feel clear from the first interaction.
             </p>
-          </FadeIn>
+          </ScrollReveal>
 
-          <FadeIn delay={0.55} direction="up">
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="#projects"
-                className="inline-flex items-center gap-2 rounded-md bg-zinc-100 px-4 py-3 text-sm font-semibold text-zinc-950 transition-colors hover:bg-white"
-              >
-                View projects <ArrowDown size={16} />
+          <ScrollReveal delay={0.22}>
+            <div className="hero-actions">
+              <a className="button-primary" href="#projects">
+                Explore selected work
+                <ArrowDownRight size={17} />
               </a>
-              <div className="flex items-center gap-2">
-                <SocialLink href="https://github.com/reddishowo" label="GitHub" icon={<Github size={18} />} />
-                <SocialLink href="https://www.linkedin.com/in/farriel-arrianta/" label="LinkedIn" icon={<Linkedin size={18} />} />
-                <SocialLink href="https://instagram.com/_farriel_" label="Instagram" icon={<Instagram size={18} />} />
+              <a
+                className="button-text"
+                href="https://www.linkedin.com/in/farriel-arrianta/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Start a conversation
+                <ArrowUpRight size={16} />
+              </a>
+              <div className="hero-socials" aria-label="Social links">
+                <a href="https://github.com/reddishowo" target="_blank" rel="noreferrer" aria-label="GitHub profile">
+                  <Github size={17} />
+                </a>
+                <a href="https://www.linkedin.com/in/farriel-arrianta/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+                  <Linkedin size={17} />
+                </a>
               </div>
             </div>
-          </FadeIn>
+          </ScrollReveal>
 
-          <CommandStatusDock />
+          <ScrollReveal className="hero-signals" delay={0.28}>
+            {signals.map((signal) => (
+              <div key={signal.label}>
+                <strong>{signal.value}</strong>
+                <span>{signal.label}</span>
+              </div>
+            ))}
+          </ScrollReveal>
         </div>
 
-        <div className="relative z-10">
-          <AnimatedKeyboard />
+        <div className="hero-visual">
+          <LabScene />
+          <div className="hero-visual__caption" aria-hidden="true">
+            <span>Interactive object / move cursor</span>
+            <span>01—03</span>
+          </div>
         </div>
+      </div>
+
+      <div className="lab-container hero-footnote" aria-hidden="true">
+        <span>Scroll to disassemble the workbench</span>
+        <i />
+        <span>JKT +07:00</span>
       </div>
     </section>
   );
 }
-
-const SocialLink = ({ href, icon, label }: { href: string; icon: ReactNode; label: string }) => (
-  <a 
-    href={href} 
-    target="_blank" 
-    rel="noreferrer" 
-    aria-label={label}
-    className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-zinc-800 bg-zinc-950/70 text-zinc-500 transition-colors duration-300 hover:border-zinc-600 hover:text-zinc-100"
-  >
-    {icon}
-  </a>
-);

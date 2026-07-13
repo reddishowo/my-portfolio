@@ -1,21 +1,21 @@
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Experience from "@/components/Experience";
-import Projects from "@/components/Projects";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import CommandBackground from "@/components/CommandBackground";
+import { About } from "@/components/About";
+import { CommandBackground } from "@/components/CommandBackground";
+import { Contact } from "@/components/Contact";
+import { Experience } from "@/components/Experience";
+import { Footer } from "@/components/Footer";
+import { Hero } from "@/components/Hero";
+import { Navbar } from "@/components/Navbar";
+import { Projects } from "@/components/Projects";
 
 export default function Home() {
   return (
-    <main className="relative min-h-dvh overflow-x-hidden bg-[#0b0d10]">
+    <main id="content" className="lab-page">
       <CommandBackground />
       <Navbar />
       <Hero />
       <About />
-      <Experience />
       <Projects />
+      <Experience />
       <Contact />
       <Footer />
     </main>
