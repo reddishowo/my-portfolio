@@ -1,9 +1,8 @@
-import { ArrowUpRight } from "lucide-react";
-import Image from "next/image";
 import {
   FeaturedProjectCard,
   type FeaturedProject,
 } from "./FeaturedProjectCard";
+import { ProjectArchive } from "./ProjectArchive";
 import { ScrollReveal } from "./ScrollReveal";
 
 const featuredProjects: readonly FeaturedProject[] = [
@@ -19,6 +18,7 @@ const featuredProjects: readonly FeaturedProject[] = [
     technologies: ["Next.js", "TypeScript", "CRM", "Dashboard"],
     github: "https://github.com/Haeryz/nextcrm-app",
     tone: "ink",
+    motion: "crm",
   },
   {
     number: "02",
@@ -32,6 +32,7 @@ const featuredProjects: readonly FeaturedProject[] = [
     technologies: ["Flutter", "Dart", "Mobile", "Operations"],
     github: "https://github.com/reddishowo/sppdn-beacukai",
     tone: "amber",
+    motion: "attendance",
   },
   {
     number: "03",
@@ -45,51 +46,9 @@ const featuredProjects: readonly FeaturedProject[] = [
     technologies: ["Next.js", "TypeScript", "Tailwind", "Product UI"],
     github: "https://github.com/reddishowo/event-management-web",
     tone: "blue",
+    motion: "events",
   },
 ];
-
-const archiveProjects = [
-  {
-    number: "04",
-    title: "Bio Collab",
-    type: "Collaborative learning platform",
-    stack: "Next.js / MongoDB",
-    imagePath: "/images/4.png",
-    github: "https://github.com/reddishowo/bio-collab",
-  },
-  {
-    number: "05",
-    title: "Micro Literacy",
-    type: "Interactive learning media",
-    stack: "Next.js / MongoDB",
-    imagePath: "/images/5.png",
-    github: "https://github.com/reddishowo/micro-literacy",
-  },
-  {
-    number: "06",
-    title: "Reparin Mobile",
-    type: "Repair booking and live tracking",
-    stack: "Flutter / Maps API",
-    imagePath: "/images/1.png",
-    github: "https://github.com/hisyam99/reparin-mobile",
-  },
-  {
-    number: "07",
-    title: "Dressmaker App",
-    type: "Custom dress ordering",
-    stack: "Flutter / Firebase",
-    github: "https://github.com/reddishowo/dressmaker-app",
-  },
-  {
-    number: "08",
-    title: "Transformer Topic Modeling",
-    type: "Scientific literature research",
-    stack: "Python / NLP / ML",
-    imagePath: "/images/7.png",
-    github:
-      "https://github.com/reddishowo/Transformer-Based-Topic-Modeling-Pipeline-for-Scientific-Literature",
-  },
-] as const;
 
 export function Projects() {
   return (
@@ -98,7 +57,7 @@ export function Projects() {
         <div className="projects-heading">
           <ScrollReveal>
             <span className="section-kicker">Selected work / 2024—2026</span>
-            <h2>
+            <h2 data-split>
               Systems shown at <span className="display-serif">working scale.</span>
             </h2>
           </ScrollReveal>
@@ -117,47 +76,7 @@ export function Projects() {
           ))}
         </div>
 
-        <div className="project-archive">
-          <ScrollReveal className="project-archive__intro">
-            <span className="section-kicker">Project index</span>
-            <h3>More experiments, products, and research.</h3>
-            <a href="https://github.com/reddishowo" target="_blank" rel="noreferrer">
-              Full GitHub profile <ArrowUpRight size={15} />
-            </a>
-          </ScrollReveal>
-
-          <div className="project-archive__list">
-            {archiveProjects.map((project, index) => (
-              <ScrollReveal key={project.title} delay={index * 0.045} distance={18}>
-                <a
-                  className="archive-row"
-                  href={project.github}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <span className="archive-row__number">{project.number}</span>
-                  <span className="archive-row__title">
-                    <strong>{project.title}</strong>
-                    <small>{project.type}</small>
-                  </span>
-                  <span className="archive-row__stack">{project.stack}</span>
-                  <ArrowUpRight size={17} />
-                  {"imagePath" in project ? (
-                    <span className="archive-row__preview" aria-hidden="true">
-                      <Image
-                        src={project.imagePath}
-                        alt=""
-                        fill
-                        sizes="260px"
-                        className="object-cover"
-                      />
-                    </span>
-                  ) : null}
-                </a>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
+        <ProjectArchive />
       </div>
     </section>
   );

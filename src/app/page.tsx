@@ -10,6 +10,7 @@ import { Projects } from "@/components/Projects";
 export default function Home() {
   return (
     <main id="content" className="lab-page">
+      <div id="theme-wipe" className="theme-wipe" aria-hidden="true" />
       <CommandBackground />
       <Navbar />
       <Hero />

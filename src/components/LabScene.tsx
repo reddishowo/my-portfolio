@@ -1,71 +1,142 @@
 "use client";
 
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { gsap, useGSAP } from "@/lib/gsap";
 import { Braces, Database, PanelsTopLeft, Smartphone } from "lucide-react";
-import { useRef, type PointerEvent } from "react";
+import { useRef } from "react";
 
 export function LabScene() {
   const stageRef = useRef<HTMLDivElement>(null);
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const smoothX = useSpring(pointerX, { stiffness: 110, damping: 24 });
-  const smoothY = useSpring(pointerY, { stiffness: 110, damping: 24 });
-  const rotateY = useTransform(smoothX, [-1, 1], [-7, 7]);
-  const rotateX = useTransform(smoothY, [-1, 1], [6, -6]);
-  const shouldReduceMotion = useReducedMotion();
 
-  const { scrollYProgress } = useScroll({
-    target: stageRef,
-    offset: ["start end", "end start"],
-  });
-  const sceneY = useTransform(scrollYProgress, [0, 1], [42, -72]);
-  const sceneScale = useTransform(scrollYProgress, [0, 0.45, 1], [0.94, 1, 0.96]);
+  useGSAP(
+    () => {
+      const stage = stageRef.current;
+      const world = stage?.querySelector<HTMLElement>(".lab-scene__world");
+      const hero = stage?.closest<HTMLElement>(".hero-section");
+      if (!stage || !world || !hero) return;
 
-  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
-    if (shouldReduceMotion || !stageRef.current) return;
-    const bounds = stageRef.current.getBoundingClientRect();
-    pointerX.set(((event.clientX - bounds.left) / bounds.width - 0.5) * 2);
-    pointerY.set(((event.clientY - bounds.top) / bounds.height - 0.5) * 2);
-  };
+      gsap.set(stage, { autoAlpha: 1 });
 
-  const resetPointer = () => {
-    pointerX.set(0);
-    pointerY.set(0);
-  };
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
 
-  const entrance = (delay: number, x = 0, y = 28) => ({
-    initial: shouldReduceMotion ? false : { opacity: 0, x, y, scale: 0.92 },
-    animate: { opacity: 1, x: 0, y: 0, scale: 1 },
-    transition: { duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] as const },
-  });
+      const entrance = gsap.timeline({
+        defaults: { duration: 1.05, ease: "lab-smooth" },
+        delay: 0.12,
+      });
+
+      entrance
+        .from(".lab-scene__shadow", { autoAlpha: 0, scale: 0.55, duration: 1.2 }, 0)
+        .from(".lab-scene__plinth", { autoAlpha: 0, y: 90, rotationX: 75 }, 0)
+        .from(".lab-scene__browser", { autoAlpha: 0, x: 70, y: -35, rotationY: -14, scale: 0.9 }, 0.12)
+        .from(".lab-scene__code", { autoAlpha: 0, x: -90, y: 70, rotation: -14, scale: 0.86 }, 0.3)
+        .from(".lab-scene__phone", { autoAlpha: 0, x: 90, y: 85, rotation: 14, scale: 0.82 }, 0.4)
+        .from(".lab-scene__chip", { autoAlpha: 0, x: 55, y: -70, rotation: 16, scale: 0.72 }, 0.52)
+        .from(".scene-metrics > span", { autoAlpha: 0, y: 14, stagger: 0.07, duration: 0.55 }, 0.72)
+        .from(".scene-workflow > span", { autoAlpha: 0, y: 12, stagger: 0.06, duration: 0.5 }, 0.82)
+        .from(".scene-phone-task", { autoAlpha: 0, x: 12, stagger: 0.06, duration: 0.45 }, 0.88)
+        .from(".lab-scene__chip i", { scaleX: 0, transformOrigin: "0 50%", stagger: 0.04, duration: 0.4 }, 1);
+
+      const metricValues = gsap.utils.toArray<HTMLElement>("[data-count]", stage);
+      metricValues.forEach((metric) => {
+        const finalValue = Number(metric.dataset.count ?? 0);
+        const counter = { value: 0 };
+        entrance.to(
+          counter,
+          {
+            value: finalValue,
+            duration: 0.8,
+            ease: "power2.out",
+            onUpdate: () => {
+              metric.textContent = String(Math.round(counter.value)).padStart(2, "0");
+            },
+          },
+          0.72,
+        );
+      });
+
+      const statement = stage.querySelector<HTMLElement>("[data-scramble]");
+      if (statement) {
+        const text = statement.textContent ?? "";
+        entrance.fromTo(
+          statement,
+          { textContent: "" },
+          {
+            duration: 0.9,
+            scrambleText: { text, chars: "upperAndLowerCase", speed: 0.7 },
+          },
+          0.65,
+        );
+      }
+
+      const rotateXTo = gsap.quickTo(world, "rotationX", {
+        duration: 0.65,
+        ease: "power3.out",
+      });
+      const rotateYTo = gsap.quickTo(world, "rotationY", {
+        duration: 0.65,
+        ease: "power3.out",
+      });
+
+      const handlePointerMove = (event: PointerEvent) => {
+        const bounds = stage.getBoundingClientRect();
+        const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
+        const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
+        rotateYTo(x * 7);
+        rotateXTo(y * -6);
+      };
+
+      const resetPointer = () => {
+        rotateXTo(0);
+        rotateYTo(0);
+      };
+
+      const pointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+      if (pointerQuery.matches) {
+        stage.addEventListener("pointermove", handlePointerMove);
+        stage.addEventListener("pointerleave", resetPointer);
+      }
+
+      const exitTimeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: hero,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      exitTimeline
+        .to(".lab-scene__browser", { xPercent: 22, y: -120, rotationY: -12, scale: 0.9 }, 0)
+        .to(".lab-scene__code", { x: -130, y: 75, rotation: -18, scale: 0.82 }, 0)
+        .to(".lab-scene__phone", { x: 115, y: 85, rotation: 18, scale: 0.8 }, 0)
+        .to(".lab-scene__chip", { x: 85, y: -125, rotation: 24, scale: 0.75 }, 0)
+        .to(".lab-scene__plinth", { y: 110, rotationX: 72, autoAlpha: 0.25 }, 0)
+        .to(".lab-scene__shadow", { scale: 0.68, autoAlpha: 0 }, 0)
+        .to(world, { y: -32, scale: 0.88 }, 0);
+
+      return () => {
+        stage.removeEventListener("pointermove", handlePointerMove);
+        stage.removeEventListener("pointerleave", resetPointer);
+      };
+    },
+    { scope: stageRef },
+  );
 
   return (
     <div
       ref={stageRef}
       className="lab-scene"
-      onPointerMove={handlePointerMove}
-      onPointerLeave={resetPointer}
       role="img"
       aria-label="A layered three-dimensional software workbench representing web, mobile, and data engineering"
     >
-      <motion.div
-        className="lab-scene__scroll"
-        style={shouldReduceMotion ? undefined : { y: sceneY, scale: sceneScale }}
-      >
-        <motion.div
-          className="lab-scene__world"
-          style={shouldReduceMotion ? undefined : { rotateX, rotateY }}
-        >
+      <div className="lab-scene__scroll">
+        <div className="lab-scene__world">
           <div className="lab-scene__shadow" aria-hidden="true" />
 
-          <motion.div className="lab-scene__browser" {...entrance(0.18, 38, -8)}>
+          <div className="lab-scene__browser">
             <div className="scene-window-bar">
               <span className="scene-window-dots" aria-hidden="true">
                 <i />
@@ -86,13 +157,13 @@ export function LabScene() {
                 <div className="scene-dashboard__topline">
                   <div>
                     <small>OPERATION / 01</small>
-                    <strong>Make complexity feel simple.</strong>
+                    <strong data-scramble>Make complexity feel simple.</strong>
                   </div>
                   <span className="scene-live">live</span>
                 </div>
                 <div className="scene-metrics">
-                  <span><strong>03</strong><small>disciplines</small></span>
-                  <span><strong>08</strong><small>builds</small></span>
+                  <span><strong data-count="3">03</strong><small>disciplines</small></span>
+                  <span><strong data-count="8">08</strong><small>builds</small></span>
                   <span><strong>ID</strong><small>based</small></span>
                 </div>
                 <div className="scene-workflow">
@@ -102,9 +173,9 @@ export function LabScene() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div className="lab-scene__code" {...entrance(0.34, -46, 42)}>
+          <div className="lab-scene__code">
             <div className="scene-card-label">
               <Braces size={13} /> interface.tsx
             </div>
@@ -115,9 +186,9 @@ export function LabScene() {
               <span>&nbsp;&nbsp;noise: <strong>false</strong></span>
               <span>&#125;;</span>
             </code>
-          </motion.div>
+          </div>
 
-          <motion.div className="lab-scene__phone" {...entrance(0.42, 52, 52)}>
+          <div className="lab-scene__phone">
             <div className="scene-phone-speaker" />
             <div className="scene-phone-head">
               <span>09:41</span>
@@ -129,23 +200,23 @@ export function LabScene() {
             <div className="scene-phone-task"><i />Interface<span>active</span></div>
             <div className="scene-phone-task"><i />Ship<span>next</span></div>
             <div className="scene-phone-nav"><span /><span className="is-active" /><span /></div>
-          </motion.div>
+          </div>
 
-          <motion.div className="lab-scene__chip" {...entrance(0.5, 22, -30)}>
+          <div className="lab-scene__chip">
             <Database size={15} />
             <span><small>DATA</small><strong>24</strong></span>
             <div aria-hidden="true"><i /><i /><i /><i /></div>
-          </motion.div>
+          </div>
 
-          <motion.div className="lab-scene__plinth" {...entrance(0.08, 0, 55)}>
+          <div className="lab-scene__plinth">
             <div className="scene-plinth-edge" />
             <span><i />01 / WEB</span>
             <span><i />02 / MOBILE</span>
             <span><i />03 / DATA</span>
             <strong>FA—LAB</strong>
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

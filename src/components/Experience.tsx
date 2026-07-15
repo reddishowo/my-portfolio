@@ -1,4 +1,8 @@
+"use client";
+
+import { gsap, useGSAP } from "@/lib/gsap";
 import { Award, BriefcaseBusiness, GraduationCap, Microscope, Smartphone } from "lucide-react";
+import { useRef } from "react";
 import { ScrollReveal } from "./ScrollReveal";
 
 const timeline = [
@@ -53,13 +57,93 @@ const timeline = [
 ] as const;
 
 export function Experience() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const section = sectionRef.current;
+      const timelineElement = section?.querySelector<HTMLElement>(".timeline");
+      const signal = section?.querySelector<HTMLElement>("[data-current-signal]");
+      if (!section || !timelineElement || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      gsap.fromTo(
+        ".timeline__progress",
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: "none",
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: timelineElement,
+            start: "top 78%",
+            end: "bottom 48%",
+            scrub: 0.7,
+            invalidateOnRefresh: true,
+          },
+        },
+      );
+
+      const entries = gsap.utils.toArray<HTMLElement>(".timeline-entry", timelineElement);
+      entries.forEach((entry, index) => {
+        const marker = entry.querySelector<HTMLElement>(".timeline-entry__marker i");
+        const content = entry.querySelector<HTMLElement>(".timeline-entry__content");
+        const iconParts = entry.querySelectorAll("svg path, svg line, svg circle, svg polyline");
+        const title = entry.querySelector<HTMLElement>("h3")?.textContent ?? "Build signal";
+
+        const reveal = gsap.timeline({
+          defaults: { ease: "lab-smooth", immediateRender: false },
+          scrollTrigger: {
+            trigger: entry,
+            start: "top 84%",
+            once: true,
+            invalidateOnRefresh: true,
+            onEnter: () => {
+              entries.forEach((item) => item.classList.toggle("is-active", item === entry));
+              if (signal) {
+                gsap.to(signal, {
+                  duration: 0.72,
+                  scrambleText: {
+                    text: `${String(index + 1).padStart(2, "0")} / ${title}`,
+                    chars: "01ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                    speed: 0.62,
+                  },
+                });
+              }
+            },
+          },
+        });
+
+        reveal
+          .from(marker, { scale: 0, duration: 0.5 }, 0)
+          .from(content, { autoAlpha: 0, x: 38, duration: 0.78 }, 0.05)
+          .from(entry.querySelectorAll(".timeline-entry__meta > *"), { autoAlpha: 0, y: 8, stagger: 0.05, duration: 0.4 }, 0.22)
+          .from(iconParts, { drawSVG: 0, duration: 0.65, stagger: 0.03 }, 0.3)
+          .from(entry.querySelectorAll("li"), { autoAlpha: 0, y: 8, stagger: 0.04, duration: 0.4 }, 0.4);
+
+        const badge = entry.querySelector<HTMLElement>(".timeline-entry__meta strong");
+        if (badge) {
+          reveal.fromTo(
+            badge,
+            { boxShadow: "0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent)" },
+            {
+              boxShadow: "0 0 0 14px color-mix(in srgb, var(--accent) 0%, transparent)",
+              duration: 0.8,
+            },
+            0.48,
+          );
+        }
+      });
+    },
+    { scope: sectionRef },
+  );
+
   return (
-    <section id="experience" className="section-shell experience-section">
+    <section ref={sectionRef} id="experience" className="section-shell experience-section">
       <div className="lab-container experience-layout">
         <div className="experience-heading">
           <ScrollReveal>
             <span className="section-kicker">Build log / trajectory</span>
-            <h2>
+            <h2 data-split>
               Learning by <span className="display-serif">shipping.</span>
             </h2>
             <p>
@@ -70,17 +154,17 @@ export function Experience() {
 
           <ScrollReveal className="experience-heading__signal" delay={0.12}>
             <span>Current signal</span>
-            <strong>Full-stack interfaces with real operational context.</strong>
+            <strong data-current-signal>Full-stack interfaces with real operational context.</strong>
           </ScrollReveal>
         </div>
 
         <div className="timeline" aria-label="Experience timeline">
+          <span className="timeline__progress" aria-hidden="true" />
           {timeline.map((entry, index) => {
             const Icon = entry.icon;
 
             return (
-              <ScrollReveal key={entry.title} delay={index * 0.055} distance={20}>
-                <article className="timeline-entry">
+                <article key={entry.title} className="timeline-entry">
                   <div className="timeline-entry__marker">
                     <span>{String(index + 1).padStart(2, "0")}</span>
                     <i aria-hidden="true" />
@@ -105,7 +189,6 @@ export function Experience() {
                     </ul>
                   </div>
                 </article>
-              </ScrollReveal>
             );
           })}
         </div>
