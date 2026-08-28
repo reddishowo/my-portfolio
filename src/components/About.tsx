@@ -1,24 +1,23 @@
 import Image from "next/image";
 import { principles } from "@/data/portfolio";
+import { Reveal } from "./Reveal";
 
 const capabilities = [
-  ["Web products", "Next.js, React, TypeScript, product interfaces"],
-  ["Mobile applications", "Flutter, Dart, field and role-based workflows"],
-  ["Data systems", "Python, NLP, machine learning, practical pipelines"],
+  ["web", "Next.js · React · TypeScript"],
+  ["mobile", "Flutter · Dart · GetX"],
+  ["data", "Python · NLP · ML"],
 ] as const;
 
 export function About() {
   return (
     <section id="about" className="section section--tinted" aria-labelledby="about-title">
       <div className="shell about-surface">
-        <div className="section-heading" data-reveal>
-          <span className="section-label">02 / About</span>
-          <div>
-            <h2 id="about-title">Engineering with a product point of view.</h2>
-          </div>
-        </div>
+        <Reveal className="section-heading section-heading--lean">
+          <span className="section-label">02 / about</span>
+          <h2 id="about-title">Engineering with a product point of view.</h2>
+        </Reveal>
 
-        <div className="about-grid" data-reveal data-reveal-delay="80">
+        <Reveal className="about-grid" delay={80}>
           <div className="about-portrait">
             <Image
               src="/images/me.png"
@@ -30,14 +29,7 @@ export function About() {
 
           <div className="about-copy">
             <p className="about-copy__lead">
-              I work where interface craft, product thinking, and practical engineering
-              meet. The goal is not simply to ship a screen—it is to understand the job
-              behind it and make that job easier.
-            </p>
-            <p>
-              My projects have taken me from employee tools and event platforms to CRM
-              systems and scientific-literature research. That range has taught me to
-              adapt the technology to the problem, rather than the other way around.
+              I build software around the real job behind the screen.
             </p>
 
             <dl className="capability-list">
@@ -49,16 +41,14 @@ export function About() {
               ))}
             </dl>
           </div>
-        </div>
+        </Reveal>
 
-        <ol className="principles" aria-label="Working principles">
-          {principles.map((principle, index) => (
-            <li key={principle} data-reveal data-reveal-delay={index * 70}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <p>{principle}</p>
-            </li>
-          ))}
-        </ol>
+        <Reveal delay={140}>
+          <p className="about-principles">
+            <span className="about-principles__label">{"// principles"}</span>
+            {principles.join("   ·   ")}
+          </p>
+        </Reveal>
       </div>
     </section>
   );

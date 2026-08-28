@@ -1,30 +1,25 @@
 import Image from "next/image";
 import { archiveProjects, featuredProjects } from "@/data/portfolio";
+import { Reveal } from "./Reveal";
 
 export function Work() {
   return (
     <section id="work" className="section shell" aria-labelledby="work-title">
-      <div className="section-heading" data-reveal>
-        <span className="section-label">01 / Selected work</span>
-        <div>
-          <h2 id="work-title">Products built around the work people actually do.</h2>
-          <p>
-            A selection of operational, mobile, and collaborative systems—shown through
-            the problem, my contribution, and the resulting product.
-          </p>
-        </div>
-      </div>
+      <Reveal className="section-heading section-heading--lean">
+        <span className="section-label">01 / selected work</span>
+        <h2 id="work-title">Products built around the work people actually do.</h2>
+      </Reveal>
 
       <div className="featured-work">
         {featuredProjects.map((project, index) => (
-          <article
+          <Reveal
+            as="article"
             key={project.title}
             className="project"
-            data-reveal
-            data-reveal-delay={index * 70}
+            delay={index * 70}
           >
             <a
-              className="project__image"
+              className="project__media"
               href={project.repository}
               target="_blank"
               rel="noreferrer"
@@ -34,10 +29,10 @@ export function Work() {
                 src={project.image}
                 alt={project.imageAlt}
                 fill
-                sizes="(max-width: 760px) 100vw, 68vw"
+                sizes="(max-width: 760px) 100vw, 60vw"
               />
-              <span className="project__image-action" aria-hidden="true">
-                View project ↗
+              <span className="project__media-action" aria-hidden="true">
+                View project &#8599;
               </span>
             </a>
 
@@ -49,38 +44,32 @@ export function Work() {
               </div>
 
               <h3>{project.title}</h3>
-              <p className="project__summary">{project.summary}</p>
-
-              <div className="project__notes">
-                <div>
-                  <span>Contribution</span>
-                  <p>{project.contribution}</p>
-                </div>
-                <div>
-                  <span>Product scope</span>
-                  <p>{project.detail}</p>
-                </div>
-              </div>
+              <p className="project__tagline">{project.tagline}</p>
 
               <div className="project__footer">
-                <ul aria-label={`${project.title} technologies`}>
+                <ul className="project__stack" aria-label={`${project.title} technologies`}>
                   {project.stack.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-                <a href={project.repository} target="_blank" rel="noreferrer">
-                  Repository <span aria-hidden="true">↗</span>
+                <a
+                  className="project__link"
+                  href={project.repository}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Repository <span aria-hidden="true">&#8599;</span>
                 </a>
               </div>
             </div>
-          </article>
+          </Reveal>
         ))}
       </div>
 
-      <div className="archive" aria-labelledby="archive-title" data-reveal>
+      <Reveal className="archive" delay={120}>
         <div className="archive__heading">
-          <h3 id="archive-title">Project archive</h3>
-          <span>Five more builds and experiments</span>
+          <strong>project archive</strong>
+          <span>$ ls -la ./archive &mdash; five more builds</span>
         </div>
 
         <div className="archive__list">
@@ -97,11 +86,11 @@ export function Work() {
               <span>{project.type}</span>
               <span>{project.stack}</span>
               <span>{project.year}</span>
-              <span className="archive-row__arrow" aria-hidden="true">↗</span>
+              <span className="archive-row__arrow" aria-hidden="true">&#8599;</span>
             </a>
           ))}
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

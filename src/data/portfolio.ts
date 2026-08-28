@@ -3,9 +3,7 @@ export type FeaturedProject = {
   title: string;
   category: string;
   period: string;
-  summary: string;
-  contribution: string;
-  detail: string;
+  tagline: string;
   image: string;
   imageAlt: string;
   stack: readonly string[];
@@ -18,14 +16,10 @@ export const featuredProjects: readonly FeaturedProject[] = [
     title: "MekTek CRM",
     category: "Operations platform",
     period: "2026 — ongoing",
-    summary:
-      "A purpose-built CRM that gives a heavy-equipment service team one clear view of customers, communication, and service progress.",
-    contribution:
-      "I am designing and building the product end to end, translating an operational workflow into a maintainable full-stack system.",
-    detail: "Customer records · service lifecycle · dashboards",
+    tagline: "Operations CRM for heavy-equipment service teams.",
     image: "/images/8.png",
     imageAlt: "MekTek CRM customer and operations dashboard",
-    stack: ["Next.js", "TypeScript", "CRM architecture", "Product design"],
+    stack: ["Next.js", "TypeScript", "Product design"],
     repository: "https://github.com/Haeryz/nextcrm-app",
   },
   {
@@ -33,14 +27,10 @@ export const featuredProjects: readonly FeaturedProject[] = [
     title: "SPPDN Mobile",
     category: "Mobile operations",
     period: "2025 — internship",
-    summary:
-      "A mobile attendance and activity system for customs laboratory staff working across office and field contexts.",
-    contribution:
-      "I built the Flutter application around real employee routines, including attendance, activity documentation, photos, and history.",
-    detail: "Attendance · field documentation · activity history",
+    tagline: "Attendance and field activity for customs lab staff.",
     image: "/images/2.png",
     imageAlt: "SPPDN employee attendance application screens",
-    stack: ["Flutter", "Dart", "GetX", "Mobile workflows"],
+    stack: ["Flutter", "Dart", "GetX"],
     repository: "https://github.com/reddishowo/sppdn-beacukai",
   },
   {
@@ -48,14 +38,10 @@ export const featuredProjects: readonly FeaturedProject[] = [
     title: "Evenity",
     category: "Event platform",
     period: "Full-stack product",
-    summary:
-      "A web product that brings event organization, ticketing, attendee management, and day-to-day operations into one coherent flow.",
-    contribution:
-      "I shaped the interface and full-stack experience around the different tasks organizers and attendees need to complete.",
-    detail: "Events · ticketing · attendee workflows",
+    tagline: "Events, ticketing, and attendees in one flow.",
     image: "/images/3.png",
     imageAlt: "Evenity event-management website on laptop and tablet",
-    stack: ["Next.js", "TypeScript", "Tailwind CSS", "Product UI"],
+    stack: ["Next.js", "TypeScript", "Tailwind CSS"],
     repository: "https://github.com/reddishowo/event-management-web",
   },
 ];
@@ -109,29 +95,25 @@ export const experience = [
     period: "Mar 2026 — now",
     role: "Freelance Full-Stack Web Developer",
     organization: "PT MekTek Tanjung Lestari",
-    description:
-      "Designing and developing an operational CRM for customer records, service workflows, communication, and reporting.",
+    tagline: "Operational CRM for service workflows.",
   },
   {
     period: "Jun — Aug 2025",
     role: "Mobile App Developer Intern",
     organization: "Balai Laboratorium Bea dan Cukai",
-    description:
-      "Created the SPPDN mobile application to support employee attendance and activity-management workflows.",
+    tagline: "SPPDN attendance and activity app.",
   },
   {
     period: "2022 — present",
     role: "Bachelor of Informatics",
     organization: "Universitas Muhammadiyah Malang",
-    description:
-      "Studying software engineering through web platforms, mobile applications, and data-oriented systems.",
+    tagline: "Web, mobile, and data systems.",
   },
   {
     period: "Ongoing research",
     role: "Transformer Topic Modeling",
     organization: "Scientific-literature pipelines",
-    description:
-      "Exploring transformer-based workflows for comparing and understanding collections of scientific literature.",
+    tagline: "NLP workflows for scientific literature.",
   },
 ] as const;
 

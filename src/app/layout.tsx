@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Inter } from "next/font/google";
+import { JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,7 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Farriel Arrianta — Software Engineer",
   description:
-    "Software engineer in Malang, Indonesia, designing and building clear web products, mobile applications, and data systems.",
+    "Software engineer in Malang, Indonesia building clear web products, mobile applications, and data systems. ~/portfolio",
   keywords: [
     "Farriel Arrianta",
     "software engineer",
@@ -50,14 +56,18 @@ const themeScript = `
     try {
       const saved = localStorage.getItem("portfolio-theme");
       const preferred = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      document.documentElement.dataset.theme = saved === "dark" || saved === "light" ? saved : preferred;
+      document.documentElement.dataset.theme = saved === "dark" || saved === "light" ? saved : "dark";
     } catch (_) {}
   })();
 `;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${jetbrainsMono.variable} ${inter.variable}`}
+      suppressHydrationWarning
+    >
       <body>
         <Script id="theme-preference" strategy="beforeInteractive">
           {themeScript}
