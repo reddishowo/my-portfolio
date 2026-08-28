@@ -1,7 +1,8 @@
 "use client";
 
 import { Flip, gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
-import { useRef, useState, type MouseEvent } from "react";
+import { Menu, X } from "lucide-react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 
 const navItems = [
@@ -13,9 +14,40 @@ const navItems = [
 
 export function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
+  const [menuOpen, setMenuOpen] = useState(false);
   const wrapRef = useRef<HTMLElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const closeMenu = () => setMenuOpen(false);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeMenu();
+        menuButtonRef.current?.focus();
+      }
+    };
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!wrapRef.current?.contains(event.target as Node)) closeMenu();
+    };
+    const desktopQuery = window.matchMedia("(min-width: 641px)");
+    const handleViewportChange = (event: MediaQueryListEvent) => {
+      if (event.matches) closeMenu();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("pointerdown", handlePointerDown);
+    desktopQuery.addEventListener("change", handleViewportChange);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("pointerdown", handlePointerDown);
+      desktopQuery.removeEventListener("change", handleViewportChange);
+    };
+  }, [menuOpen]);
 
   useGSAP(
     () => {
@@ -117,6 +149,7 @@ export function Navbar() {
     if (!target) return;
 
     event.preventDefault();
+    setMenuOpen(false);
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     gsap.to(window, {
       duration: reduceMotion ? 0 : 0.85,
@@ -138,7 +171,7 @@ export function Navbar() {
             </span>
           </a>
 
-          <div className="site-nav__links">
+          <div id="primary-navigation" className={`site-nav__links${menuOpen ? " is-open" : ""}`}>
             <span ref={pillRef} className="site-nav__active-pill" aria-hidden="true" />
             {navItems.map((item) => (
               <a
@@ -159,6 +192,17 @@ export function Navbar() {
               <span aria-hidden="true" />
               <span>build / 26</span>
             </span>
+            <button
+              ref={menuButtonRef}
+              type="button"
+              className="site-nav__menu-btn"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="primary-navigation"
+              onClick={() => setMenuOpen((open) => !open)}
+            >
+              {menuOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
             <ThemeToggle />
           </div>
         </nav>
